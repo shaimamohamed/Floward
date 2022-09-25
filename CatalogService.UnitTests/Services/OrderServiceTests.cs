@@ -61,7 +61,6 @@ namespace CatalogService.UnitTests.Services
         }
 
 
-
         [Fact]
         public void CreateNewOrder_ResultDataShouldNotBeNull()
         {

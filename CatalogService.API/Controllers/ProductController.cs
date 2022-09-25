@@ -12,27 +12,27 @@ using System.Threading.Tasks;
 
 namespace CatalogService.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class CatalogController : ControllerBase
+    public class ProductController : ControllerBase
     {
-        private readonly ICatalogsService _catalogService;
+        private readonly IProductService _productService;
 
-        public CatalogController(ICatalogsService catalogService)
+        public ProductController(IProductService productService)
         {
-            _catalogService = catalogService;
+            _productService = productService;
         }
 
         #region
         [Produces("application/json")]
-        [HttpGet("GetAllCatalogProducts")]
-        public async Task<IActionResult> GetAllCatalogProducts()
+        [HttpGet("GetAllProducts")]
+        public async Task<IActionResult> GetAllProducts()
         {
             var customerId = 0;
             int.TryParse(User?.Claims?.SingleOrDefault(a => a.Type == ClaimTypes.NameIdentifier)?.Value, out customerId);
 
-            var response = await _catalogService.GetALLCatalog();
+            var response = await _productService.GetALLProucts();
 
             if (!response.Success)
                 return BadRequest(response);
@@ -40,13 +40,13 @@ namespace CatalogService.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("GetCatalogProductById")]
-        public async Task<IActionResult> GetCatalogProductById(int catalogId)
+        [HttpGet("GetProductById")]
+        public async Task<IActionResult> GetProductById(int productId)
         {
             var customerId = 0;
             int.TryParse(User?.Claims?.SingleOrDefault(a => a.Type == ClaimTypes.NameIdentifier)?.Value, out customerId);
 
-            var response = await _catalogService.GetCatalogById(catalogId);
+            var response = await _productService.GetProuctById(productId);
 
             if (!response.Success)
                 return BadRequest(response);
@@ -54,10 +54,10 @@ namespace CatalogService.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost("CreateNewCatalogProduct")]
-        public async Task<GeneralResponse<CatalogResponse>> CreateNewCatalogProduct([FromBody] CatalogRequest request)
+        [HttpPost("CreateNewProduct")]
+        public async Task<GeneralResponse<ProductCRUDResponse>> CreateNewProduct([FromBody] ProductCRUDRequest request)
         {
-            var respnose = new GeneralResponse<CatalogResponse>();
+            var respnose = new GeneralResponse<ProductCRUDResponse>();
 
             var isValid = !string.IsNullOrEmpty(request.Code)&& !string.IsNullOrEmpty(request.Name);
             if (!isValid)
@@ -67,26 +67,16 @@ namespace CatalogService.API.Controllers
             }
 
 
-            //var catalogModel = new Catalog
-            //{
-            //    Code = request.Code,
-            //    Name = request.Name,
-            //    Cost = request.Cost,
-            //    Price = request.Price,
-            //    ImageBase64 = request.ImageBase64,
-            //    CreateDate = DateTime.Now,
-            //    UpdateDate = DateTime.Now              
-            //};
 
-            var catalog = _catalogService.CreateCatalog(request);
+            var product = _productService.CreateProuct(request);
 
-            if (catalog == null)
+            if (product == null)
             {
                 respnose.Message = "Save Error";
                 return respnose;
             }
 
-            var catalogResponse = new CatalogResponse
+            var productResponse = new ProductCRUDResponse
             {
                 Id = request.Id,
                 Code = request.Code,
@@ -98,19 +88,19 @@ namespace CatalogService.API.Controllers
                 UpdateDate = DateTime.Now
             };
 
-            respnose = new GeneralResponse<CatalogResponse>()
+            respnose = new GeneralResponse<ProductCRUDResponse>()
             {
                 Success = true,
-                Data = catalogResponse
+                Data = productResponse
             };
 
             return respnose;
         }
 
-        [HttpPut("UpdateCatalogProduct")]
-        public async Task<GeneralResponse<CatalogResponse>> UpdateCatalogProduct([FromBody] CatalogRequest request)
+        [HttpPut("UpdateProduct")]
+        public async Task<GeneralResponse<ProductCRUDResponse>> UpdateProduct([FromBody] ProductCRUDRequest request)
         {
-            var respnose = new GeneralResponse<CatalogResponse>();
+            var respnose = new GeneralResponse<ProductCRUDResponse>();
 
             var isValid = !string.IsNullOrEmpty(request.Code) && !string.IsNullOrEmpty(request.Name);
             if (!isValid)
@@ -120,15 +110,15 @@ namespace CatalogService.API.Controllers
             }
 
 
-            var catalog = _catalogService.UpdateCatalog(request);
+            var product = _productService.UpdateProuct(request);
 
-            if (catalog == null)
+            if (product == null)
             {
                 respnose.Message = "Save Error";
                 return respnose;
             }
 
-            var catalogResponse = new CatalogResponse
+            var productResponse = new ProductCRUDResponse
             {
                 Id = request.Id,
                 Code = request.Code,
@@ -140,22 +130,22 @@ namespace CatalogService.API.Controllers
                 UpdateDate = DateTime.Now
             };
 
-            respnose = new GeneralResponse<CatalogResponse>()
+            respnose = new GeneralResponse<ProductCRUDResponse>()
             {
                 Success = true,
-                Data = catalogResponse
+                Data = productResponse
             };
 
             return respnose;
         }
 
-        [HttpDelete("DeleteCatalogProduct")]
-        public async Task<IActionResult> DeleteCatalogProduct(int catalogId)
+        [HttpDelete("DeleteProduct")]
+        public async Task<IActionResult> DeleteProduct(int productId)
         {
             var Id = 0;
             int.TryParse(User?.Claims?.SingleOrDefault(a => a.Type == ClaimTypes.NameIdentifier)?.Value, out Id);
 
-            var response = await _catalogService.DeleteCatalog(catalogId);
+            var response = await _productService.DeleteProuct(productId);
 
             if (!response.Success)
                 return BadRequest(response);

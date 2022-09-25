@@ -54,11 +54,11 @@ namespace CatalogService.API
             // configure DI for application services
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<ICatalogRepository, CatalogRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<ICatalogsService, CatalogsService>();
+            services.AddScoped<IProductService, ProductService>();
 
            
 
