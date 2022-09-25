@@ -10,7 +10,7 @@ namespace EmailService.Console
 {
     public class EmailNotificationService
     {
-        public static bool SendEmail() {
+        public static bool SendEmail(string emailBody) {
 
             #region Get Default EmailSetting ..
             var builder = new ConfigurationBuilder()
@@ -29,7 +29,7 @@ namespace EmailService.Console
 
             // Prepare Email body..
 
-            string emailBody = "this prouct has been added ..";
+            //string emailBody = "this prouct has been added ..";
 
             #endregion
 
@@ -43,7 +43,7 @@ namespace EmailService.Console
                 EnableSsl = false
             };
             client.Send(defaultFrom, defaultto, defaultSubject, emailBody);
-            System.Console.WriteLine("Sent");
+            System.Console.WriteLine("Email Sent");
 
             #endregion
 

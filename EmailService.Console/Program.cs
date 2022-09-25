@@ -8,7 +8,8 @@ namespace EmailService.Console
         static void Main(string[] args)
         {
             //System.Console.WriteLine("Hello World!");
-            EmailNotificationService.SendEmail();
+            //EmailNotificationService.SendEmail();
+            RabbitMQService.ReceiveFromQueueContinuously();
         }
     }
 }

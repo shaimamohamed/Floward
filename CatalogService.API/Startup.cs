@@ -59,8 +59,9 @@ namespace CatalogService.API
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IRabbitMQService, RabbitMQService>();
 
-           
+
 
         }
 

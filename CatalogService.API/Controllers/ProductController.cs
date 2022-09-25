@@ -4,6 +4,7 @@ using CatalogService.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,12 @@ namespace CatalogService.API.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
+        private readonly IRabbitMQService _rabbitMQService;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, IRabbitMQService rabbitMQService)
         {
             _productService = productService;
+            _rabbitMQService = rabbitMQService;
         }
 
         #region
@@ -68,13 +71,18 @@ namespace CatalogService.API.Controllers
 
 
 
-            var product = _productService.CreateProuct(request);
+            //var product = await _productService.CreateProuct(request);
 
-            if (product == null)
-            {
-                respnose.Message = "Save Error";
-                return respnose;
-            }
+            //if (product == null)
+            //{
+            //    respnose.Message = "Save Error";
+            //    return respnose;
+            //}
+
+            //var queueMessage = JsonConvert.SerializeObject(new { product.Data.Id, product.Data.Name });
+            var queueMessage = JsonConvert.SerializeObject(new { request.Id, request.Name });
+
+            _rabbitMQService.SendToQueue(queueMessage);
 
             var productResponse = new ProductCRUDResponse
             {
@@ -110,7 +118,7 @@ namespace CatalogService.API.Controllers
             }
 
 
-            var product = _productService.UpdateProuct(request);
+            var product = await _productService.UpdateProuct(request);
 
             if (product == null)
             {
