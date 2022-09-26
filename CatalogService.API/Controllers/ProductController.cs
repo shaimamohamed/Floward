@@ -84,8 +84,8 @@ namespace CatalogService.API.Controllers
                 }
 
                 // Add the New Product to RabbitMQ
-                //var queueMessage = JsonConvert.SerializeObject(new { product.Data.Id, product.Data.Name });                
-                //_rabbitMQService.SendToQueue(queueMessage);
+                var queueMessage = JsonConvert.SerializeObject(new { product.Data.Id, product.Data.Name });
+                _rabbitMQService.SendToQueue(queueMessage);
 
 
                 var productResponse = new ProductCRUDResponse
