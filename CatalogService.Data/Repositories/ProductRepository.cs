@@ -33,11 +33,10 @@ namespace CatalogService.Data.Repositories
             Product productitem = new Product();
             var isSavedSuccessfully = false;
 
-            _db.Products.Add(product);
+             _db.Products.Add(product);
             _db.SaveChanges();
 
-            //productitem = _db.Products.SingleOrDefault(a => a.Id == product.Id);
-            productitem = _db.Products.SingleOrDefault(a => a.Name == product.Name && a.Code == product.Code);
+            productitem = _db.Products.SingleOrDefault(a => a.Id == product.Id);
 
             return productitem;
         }
@@ -51,6 +50,7 @@ namespace CatalogService.Data.Repositories
             productitem = GetProductById(product.Id);
 
             return productitem;
+            //return product;
         }
         public Product DeleteProduct(int Id)
         {

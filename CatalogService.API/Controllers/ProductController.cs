@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace CatalogService.API.Controllers
 {
@@ -20,11 +21,13 @@ namespace CatalogService.API.Controllers
     {
         private readonly IProductService _productService;
         private readonly IRabbitMQService _rabbitMQService;
+        private readonly ILogger _logger;
 
-        public ProductController(IProductService productService, IRabbitMQService rabbitMQService)
+        public ProductController(IProductService productService, IRabbitMQService rabbitMQService, ILogger logger)
         {
             _productService = productService;
             _rabbitMQService = rabbitMQService;
+            _logger = logger;
         }
 
         #region
@@ -69,38 +72,47 @@ namespace CatalogService.API.Controllers
                 return respnose;
             }
 
-
-
-            //var product = await _productService.CreateProuct(request);
-
-            //if (product == null)
-            //{
-            //    respnose.Message = "Save Error";
-            //    return respnose;
-            //}
-
-            //var queueMessage = JsonConvert.SerializeObject(new { product.Data.Id, product.Data.Name });
-            var queueMessage = JsonConvert.SerializeObject(new { request.Id, request.Name });
-
-            _rabbitMQService.SendToQueue(queueMessage);
-
-            var productResponse = new ProductCRUDResponse
+            try
             {
-                Id = request.Id,
-                Code = request.Code,
-                Name = request.Name,
-                Cost = request.Cost,
-                Price = request.Price,
-                ImageBase64 = request.ImageBase64,
-                CreateDate = DateTime.Now,
-                UpdateDate = DateTime.Now
-            };
 
-            respnose = new GeneralResponse<ProductCRUDResponse>()
+                var product = await _productService.CreateProuct(request);
+
+                if (product == null)
+                {
+                    respnose.Message = "Save Error";
+                    return respnose;
+                }
+
+                // Add the New Product to RabbitMQ
+                //var queueMessage = JsonConvert.SerializeObject(new { product.Data.Id, product.Data.Name });                
+                //_rabbitMQService.SendToQueue(queueMessage);
+
+
+                var productResponse = new ProductCRUDResponse
+                {
+                    Id = product.Data.Id,
+                    Code = request.Code,
+                    Name = request.Name,
+                    Cost = request.Cost,
+                    Price = request.Price,
+                    ImageBase64 = request.ImageBase64,
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now
+                };
+
+                respnose = new GeneralResponse<ProductCRUDResponse>()
+                {
+                    Success = true,
+                    Data = productResponse
+                };
+
+            }
+            catch (Exception e)
             {
-                Success = true,
-                Data = productResponse
-            };
+                _logger.LogError("an Error Occured while saving a product .." + e.Message);
+                throw;
+
+            }
 
             return respnose;
         }

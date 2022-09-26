@@ -11,6 +11,66 @@
       ],
       "UpstreamPathTemplate": "/products",
       "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/product/GetProductById?productId={productId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/product/{productId}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    //{
+    //  "DownstreamPathTemplate": "/api/product/CreateNewProduct",
+    //  "DownstreamScheme": "http",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 5001
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/createproduct/",
+    //  "UpstreamHttpMethod": [ "Post" ]
+    //},
+    //{
+    //  "DownstreamPathTemplate": "/api/product/UpdateProduct",
+    //  "DownstreamScheme": "http",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 5001
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/updateproduct/",
+    //  "UpstreamHttpMethod": [ "Put" ]
+    //},
+    //{
+    //  "DownstreamPathTemplate": "/api/product/DeleteProduct?productId={productId}",
+    //  "DownstreamScheme": "http",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 5001
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/deleteproduct/{productId}",
+    //  "UpstreamHttpMethod": [ "Delete" ]
+    //},
+    {
+      "DownstreamPathTemplate": "/swagger",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/swagger",
+      "UpstreamHttpMethod": [ "Get" ]
     }
   ],
   "GlobalConfiguration": {

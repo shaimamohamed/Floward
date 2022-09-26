@@ -17,21 +17,7 @@ namespace CatalogService.APIGateway
 {
     public class Startup
     {
-        //public Startup(IConfiguration configuration , Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
-        //{
-        //    Configuration = configuration;
-        //    env = env;
-
-        //    var builder = new Microsoft.Extensions.Configuration.ConfigurationBuilder();
-        //    builder.SetBasePath(env.ContentRootPath)
-        //           //add configuration.json  
-        //           .AddJsonFile("configuration.json", optional: false, reloadOnChange: true)
-        //           .AddEnvironmentVariables();
-
-        //    Configuration = builder.Build();
-
-        //}
-
+       
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;

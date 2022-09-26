@@ -1,11 +1,15 @@
-﻿using CatalogService.Core.Models;
+﻿using CatalogService.Core.Entities;
+using CatalogService.Core.Interfaces.Repositories;
+using CatalogService.Core.Models;
 using CatalogService.Data.Database;
 using CatalogService.Data.Repositories;
 using CatalogService.Service.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 
@@ -60,11 +64,32 @@ namespace CatalogService.UnitTests.Services
                 };
 
                 //Act
-                var response = service.CreateProuct(request);
+                var response = service.CreateProuct(request).Result;
 
                 //Assert
-                Assert.True(response.Result.Success);
-                Assert.NotNull(response.Result.Data);
+                Assert.True(response.Success);
+                Assert.NotNull(response.Data);
+            }
+        }
+
+        [Fact]
+        public void DeleteProduct_ResultDataShouldNotBeNull()
+        {
+            //use context with data to run test
+            using (var context = SetupAndGetInMemoryDbContext())
+            {
+                //Arrange
+                var repository = new ProductRepository(context);
+                var service = new ProductService(repository);
+                int id = 11;
+
+                //Act
+                var addresponse = service.CreateProuct(new ProductCRUDRequest() { Id = id}).Result;
+                var response = service.DeleteProuct(id).Result;
+
+                //Assert
+                Assert.True(response.Success);
+                Assert.NotNull(response.Data);
             }
         }
 

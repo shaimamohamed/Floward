@@ -91,7 +91,8 @@ namespace CatalogService.Service.Services
 
             return respnose;
         }
-        public async Task<GeneralResponse<ProductCRUDResponse>> CreateProuct(ProductCRUDRequest request) {
+        public async Task<GeneralResponse<ProductCRUDResponse>> CreateProuct(ProductCRUDRequest request) 
+        {
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<ProductCRUDRequest, Product>());
             var config2 = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductCRUDResponse>());
@@ -110,7 +111,7 @@ namespace CatalogService.Service.Services
             var mapper = new Mapper(config);
             prod = mapper.Map<Product>(request);
 
-            var result = _productRepository.CreateProduct(prod);
+            var result =  _productRepository.CreateProduct(prod);
 
             if (result == null)
             {
@@ -121,7 +122,7 @@ namespace CatalogService.Service.Services
             var Temp = new ProductCRUDResponse();
 
             var mapper2 = new Mapper(config2);
-            Temp = mapper.Map<ProductCRUDResponse>(result);
+            Temp = mapper2.Map<ProductCRUDResponse>(result);
 
             respnose = new GeneralResponse<ProductCRUDResponse>()
             {
@@ -161,7 +162,7 @@ namespace CatalogService.Service.Services
             var Temp = new ProductCRUDResponse();
 
             var mapper2 = new Mapper(config2);
-            Temp = mapper.Map<ProductCRUDResponse>(result);
+            Temp = mapper2.Map<ProductCRUDResponse>(result);
 
             respnose = new GeneralResponse<ProductCRUDResponse>()
             {
