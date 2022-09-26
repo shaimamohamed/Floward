@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService.Service", "C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService.UnitTests", "CatalogService.UnitTests\CatalogService.UnitTests.csproj", "{ED80EFC7-2F1D-417B-930F-86B0B2B7DFC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService.Console", "EmailService.Console\EmailService.Console.csproj", "{E9A1B387-9470-40DB-8E2C-2E1F016C2A85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService.Console", "EmailService.Console\EmailService.Console.csproj", "{E9A1B387-9470-40DB-8E2C-2E1F016C2A85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService.APIGateway", "CatalogService.APIGateway\CatalogService.APIGateway.csproj", "{3F50C1A7-3087-4EB0-8398-F21D23415080}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{E9A1B387-9470-40DB-8E2C-2E1F016C2A85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9A1B387-9470-40DB-8E2C-2E1F016C2A85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9A1B387-9470-40DB-8E2C-2E1F016C2A85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F50C1A7-3087-4EB0-8398-F21D23415080}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F50C1A7-3087-4EB0-8398-F21D23415080}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F50C1A7-3087-4EB0-8398-F21D23415080}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F50C1A7-3087-4EB0-8398-F21D23415080}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
